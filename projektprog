@@ -1,0 +1,127 @@
+#include <math.h>
+#include <conio.h>
+#include <cstdlib>
+#include <iostream>
+#include <Windows.h>
+#include <stdio.h>
+
+
+//funckja zmiany koloru
+void changecolor(int numberofcolor)
+{
+	HANDLE hWyj;
+	hWyj = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hWyj, numberofcolor);
+}
+
+int main()
+{
+	int tablicz_LiczbyPI[100] = { 3,1,4,1, 5,9,2, 6,5,3, 5,8,9, 7,9,3, 2,3,8, 4,6,2, 6,4,3, 3,8,3, 2,7,9, 5,0,2, 8,8,4, 1,9,7, 1,6,9, 3,9,9, 3,7,5, 1,0,5, 8,2,0, 9,7,4, 9,4,4, 5,9,2, 3,0,7, 8,1,6, 4,0,6, 2,8,6, 2,0,8, 9,9,8, 6,2,8, 0,3,4, 8,2,5, 3,4,2, 1,1,7, 0,6 };
+	int colorindex = 1;
+	setlocale(LC_ALL, ".1250");
+	int suma = 0;
+	int tablica_sum[10];
+
+	
+	int n;
+	int indeksPI = 0;
+	printf_s("Podaj n dla wymiaru tablicy PI od 1 do 10: ");
+	scanf_s("%d", &n);
+
+	if (n < 0 || n>10)
+	{
+		printf("Podano niewłaściwe n!");
+		return 0;
+	}
+
+	//deklaracja tablicy 
+	int** pitab = new int* [n];
+	for (int i = 0; i < n; i++)
+	{
+		pitab[i] = new int[n];
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			pitab[i][j] = tablicz_LiczbyPI[indeksPI];
+			indeksPI++;
+		}
+	}
+
+	//sumowanie przekatnych
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			/*
+			if (i == j)
+			{
+				suma += pitab[i][j];
+			}
+			*/
+
+			for (int k = 0; k <= n; k++) 
+			{
+				if ((j + i) % n == k)
+				{
+					suma += pitab[i][j];
+				}
+
+			}
+			tablica_sum[j] = suma;
+			suma = 0;
+		}
+	}
+	
+	
+
+	//Wypisanie tablicy
+	for (int i = 0; i <n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			/*zmiana koloru 
+			if ()
+			{
+				changecolor(colorindex++);
+			}
+			*/
+			printf("%d  ", pitab[i][j]);
+
+		}
+		printf("\n");
+
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		printf("Kolejno wartości przekątnych: %d\n", tablica_sum[i]);
+	}
+
+	//printf("Suma glownej przekatnej: %d", suma);
+	_getch();
+	////return 0;
+}
+
+/*
+Wartości kolorów w konsoli:
+0 - czarny
+1 - niebieski
+2 - zielony
+3 - błękitny
+4 - czerwony
+5 - purpurowy
+6 - żółty
+7 - biały
+8 - szary
+9 - jasnoniebieski
+10 - jasnozielony
+11 - jasnobłękitny
+12 - jasnoczerwony
+13 - jasnopurpurowy
+14 - jasnożółty
+15 - jaskrawobiały
+*/
